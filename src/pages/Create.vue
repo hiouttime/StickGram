@@ -78,7 +78,6 @@ import { useI18n } from 'vue-i18n'
 import { NSteps, NStep, NCard, NButton, NForm, NFormItem, NInput, NInputNumber } from 'naive-ui'
 import { useProjectsStore } from '@/stores/projects'
 import type { ProjectType, StickerFormat } from '@/types/project'
-import { nanoid } from 'nanoid'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -99,26 +98,14 @@ const canProceed = computed(() => {
 function handleCreate() {
   if (!selectedType.value || !selectedFormat.value || !projectName.value) return
 
-  // Mock project creation logic
-  const newProject = {
-    id: nanoid(),
+  const id = projectsStore.createProject({
     name: projectName.value,
     type: selectedType.value,
     format: selectedFormat.value,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    frames: [],
-    width: selectedType.value === 'sticker' ? 512 : 100,
-    height: selectedType.value === 'sticker' ? 512 : 100,
-    fps: 30,
-    duration: 3
-  }
+    emojiCount: selectedType.value === 'sequential-emoji' ? emojiCount.value : undefined,
+  })
   
-  if (projectsStore.createProject) {
-    projectsStore.createProject(newProject as any)
-  }
-  
-  router.push(`/editor/${newProject.id}`)
+  router.push(`/editor/${id}`)
 }
 </script>
 

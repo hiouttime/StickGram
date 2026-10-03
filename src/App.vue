@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { computed } from 'vue'
 import {
   NConfigProvider,
   NMessageProvider,
@@ -7,26 +7,19 @@ import {
   NNotificationProvider,
   NLoadingBarProvider,
   NLayout,
-  NLayoutHeader,
-  NLayoutSider,
   NLayoutContent,
-  GlobalThemeOverrides,
-  darkTheme
+  NLayoutHeader,
+  darkTheme,
 } from 'naive-ui'
+import type { GlobalThemeOverrides } from 'naive-ui'
+import { useSettingsStore } from '@/stores/settings'
+import { useIsMobile } from '@/composables/useResponsive'
+import AppHeader from '@/components/layout/AppHeader.vue'
+import AppSidebar from '@/components/layout/AppSidebar.vue'
+import MobileNav from '@/components/layout/MobileNav.vue'
 
-const isMobile = ref(window.innerWidth < 768)
-
-const updateDevice = () => {
-  isMobile.value = window.innerWidth < 768
-}
-
-onMounted(() => {
-  window.addEventListener('resize', updateDevice)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateDevice)
-})
+const settingsStore = useSettingsStore()
+const isMobile = useIsMobile()
 
 const themeOverrides: GlobalThemeOverrides = {
   common: {
@@ -37,8 +30,9 @@ const themeOverrides: GlobalThemeOverrides = {
   },
 }
 
-// In a real implementation this would come from the settings store
-const currentTheme = computed(() => null)
+const currentTheme = computed(() => {
+  return settingsStore.isDark ? darkTheme : null
+})
 </script>
 
 <template>
@@ -47,12 +41,15 @@ const currentTheme = computed(() => null)
       <NDialogProvider>
         <NNotificationProvider>
           <NLoadingBarProvider>
-            
-            <NLayout v-if="!isMobile" position="absolute">
-              <NLayoutHeader bordered>AppHeader</NLayoutHeader>
-              <NLayout has-sider position="absolute" style="top: 60px">
-                <NLayoutSider bordered>Nav</NLayoutSider>
-                <NLayoutContent>
+
+            <!-- Desktop Layout -->
+            <div v-if="!isMobile" class="app-layout">
+              <NLayoutHeader bordered class="app-layout-header">
+                <AppHeader />
+              </NLayoutHeader>
+              <NLayout has-sider class="app-layout-body">
+                <AppSidebar />
+                <NLayoutContent :native-scrollbar="false" content-style="padding: 0;">
                   <router-view v-slot="{ Component }">
                     <keep-alive include="Home">
                       <component :is="Component" />
@@ -60,18 +57,19 @@ const currentTheme = computed(() => null)
                   </router-view>
                 </NLayoutContent>
               </NLayout>
-            </NLayout>
+            </div>
 
-            <NLayout v-else position="absolute">
-              <NLayoutContent style="bottom: 50px">
+            <!-- Mobile Layout -->
+            <div v-else class="app-layout">
+              <NLayoutContent class="app-layout-mobile-content" :native-scrollbar="false" content-style="padding: 0; padding-bottom: 60px;">
                 <router-view v-slot="{ Component }">
                   <keep-alive include="Home">
                     <component :is="Component" />
                   </keep-alive>
                 </router-view>
               </NLayoutContent>
-              <div style="position: absolute; bottom: 0; width: 100%; height: 50px; background: var(--n-color);">MobileNav</div>
-            </NLayout>
+              <MobileNav />
+            </div>
 
           </NLoadingBarProvider>
         </NNotificationProvider>
@@ -80,5 +78,29 @@ const currentTheme = computed(() => null)
   </NConfigProvider>
 </template>
 
-<style scoped>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+#app {
+  height: 100%;
+}
+.app-layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.app-layout-header {
+  flex-shrink: 0;
+}
+.app-layout-body {
+  flex: 1;
+  overflow: hidden;
+}
+.app-layout-mobile-content {
+  flex: 1;
+  overflow: auto;
+}
 </style>

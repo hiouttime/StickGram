@@ -1,64 +1,53 @@
 <template>
-  <n-layout-header bordered class="app-header">
+  <div class="app-header">
     <div class="header-content">
-      <div class="logo">
+      <div class="logo" @click="router.push('/')">
         <span class="emoji">🎨</span>
-        <span class="title">StickGram</span>
+        <span class="app-name">StickGram</span>
       </div>
-      <n-space align="center">
+      <n-space align="center" :size="8">
         <n-dropdown :options="languageOptions" @select="handleLanguageSelect">
-          <n-button quaternary>
+          <n-button quaternary circle>
             <template #icon>
               <n-icon><LanguageOutline /></n-icon>
             </template>
           </n-button>
         </n-dropdown>
-        <n-button quaternary @click="toggleTheme">
+        <n-button quaternary circle @click="settingsStore.toggleTheme()">
           <template #icon>
             <n-icon>
-              <MoonOutline v-if="theme === 'light'" />
+              <MoonOutline v-if="!settingsStore.isDark" />
               <SunnyOutline v-else />
             </n-icon>
           </template>
         </n-button>
-        <n-button type="primary" @click="goToCreate">
+        <n-button type="primary" size="small" @click="router.push('/create')">
           {{ t('home.newProject') }}
         </n-button>
       </n-space>
     </div>
-  </n-layout-header>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { NLayoutHeader, NSpace, NButton, NIcon, NDropdown } from 'naive-ui'
+import { NSpace, NButton, NIcon, NDropdown } from 'naive-ui'
 import { LanguageOutline, MoonOutline, SunnyOutline } from '@vicons/ionicons5'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useSettingsStore } from '@/stores/settings'
-import { computed } from 'vue'
 
 const { t, locale } = useI18n()
 const router = useRouter()
 const settingsStore = useSettingsStore()
 
-const theme = computed(() => settingsStore.theme)
-
 const languageOptions = [
   { label: 'English', key: 'en' },
-  { label: '简体中文', key: 'zh-CN' }
+  { label: '简体中文', key: 'zh-CN' },
 ]
 
 function handleLanguageSelect(key: string) {
-  settingsStore.locale = key as any
+  settingsStore.setLocale(key as 'en' | 'zh-CN')
   locale.value = key
-}
-
-function toggleTheme() {
-  settingsStore.theme = settingsStore.theme === 'light' ? 'dark' : 'light'
-}
-
-function goToCreate() {
-  router.push('/create')
 }
 </script>
 
@@ -68,11 +57,8 @@ function goToCreate() {
   display: flex;
   align-items: center;
   padding: 0 20px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
+  border-bottom: 1px solid var(--n-border-color, #e0e0e6);
+  background-color: var(--n-color, #fff);
 }
 .header-content {
   width: 100%;
@@ -84,10 +70,14 @@ function goToCreate() {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 20px;
-  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
 }
 .emoji {
   font-size: 24px;
+}
+.app-name {
+  font-size: 20px;
+  font-weight: bold;
 }
 </style>

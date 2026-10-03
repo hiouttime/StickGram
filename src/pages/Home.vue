@@ -79,7 +79,7 @@ function deleteProject(id: string) {
 }
 
 function duplicateProject(id: string) {
-  // Logic to duplicate in store
+  projectsStore.duplicateProject(id)
 }
 </script>
 

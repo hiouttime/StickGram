@@ -5,7 +5,7 @@
     :collapsed-width="64"
     :width="200"
     show-trigger
-    class="app-sidebar"
+    :native-scrollbar="false"
   >
     <n-menu
       :collapsed-width="64"
@@ -36,18 +36,18 @@ const menuOptions = computed(() => [
   {
     label: t('nav.home'),
     key: '/',
-    icon: renderIcon(HomeOutline)
+    icon: renderIcon(HomeOutline),
   },
   {
     label: t('nav.templates'),
     key: '/templates',
-    icon: renderIcon(GridOutline)
+    icon: renderIcon(GridOutline),
   },
   {
     label: t('nav.settings'),
     key: '/settings',
-    icon: renderIcon(SettingsOutline)
-  }
+    icon: renderIcon(SettingsOutline),
+  },
 ])
 
 const activeKey = computed(() => route.path)
@@ -56,10 +56,3 @@ function handleUpdateValue(key: string) {
   router.push(key)
 }
 </script>
-
-<style scoped>
-.app-sidebar {
-  height: calc(100vh - 56px);
-  margin-top: 56px;
-}
-</style>
