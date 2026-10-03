@@ -27,6 +27,11 @@ const routes: RouteRecordRaw[] = [
     name: 'Settings',
     component: () => import('@/pages/Settings.vue'),
   },
+  {
+    path: '/template/text-emoji',
+    name: 'TextEmojiTemplate',
+    component: () => import('@/pages/TemplateEditor.vue'),
+  },
 ]
 
 const router = createRouter({
