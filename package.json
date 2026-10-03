@@ -1,0 +1,33 @@
+{
+  "name": "sticker.tgda.sh",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "deploy": "wrangler deploy",
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json"
+  },
+  "dependencies": {
+    "vue": "^3.5",
+    "vue-router": "^4",
+    "pinia": "^2",
+    "vue-i18n": "^11",
+    "naive-ui": "^2.40",
+    "@vicons/ionicons5": "^0.12",
+    "vue-konva": "^3",
+    "konva": "^9",
+    "lottie-web": "^5.12",
+    "pako": "^2",
+    "nanoid": "^5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5",
+    "typescript": "^5.6",
+    "vite": "^6",
+    "vue-tsc": "^2",
+    "wrangler": "^4",
+    "@types/pako": "^2"
+  }
+}
