@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import Clarity from '@microsoft/clarity'
 import router from './router'
 import i18n from './i18n/index'
 import App from './App.vue'
@@ -18,3 +19,5 @@ app.use(router)
 app.use(i18n)
 
 app.mount('#app')
+
+if (import.meta.env.PROD) Clarity.init('ytaqmsk629')
