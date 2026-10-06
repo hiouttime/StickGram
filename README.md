@@ -16,9 +16,13 @@ pnpm build
 ## 部署
 
 ```sh
-pnpm build
+pnpm install --frozen-lockfile
 pnpm deploy
 ```
+
+`wrangler.toml` 的 `[build] command = "pnpm build"` 会在部署前执行类型检查和 Vite 编译，产物写入 `dist`，再由 `[assets]` 上传并按 SPA 处理路由。无需手动预先构建。构建配置见 [Cloudflare 自定义构建文档](https://developers.cloudflare.com/workers/wrangler/configuration/#custom-builds)。
+
+只验证编译和部署打包、不上传时，运行 `pnpm exec wrangler deploy --dry-run`。
 
 `wrangler.toml` 使用 `custom_domain = true` 声明 `sticker.tgda.sh`，部署时由 Wrangler 配置域名绑定。域名所属的 `tgda.sh` 区域需在部署账号中处于激活状态。配置方式见 [Cloudflare 自定义域名文档](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/#set-up-a-custom-domain-in-your-wrangler-configuration-file)。
 

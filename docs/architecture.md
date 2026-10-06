@@ -26,28 +26,28 @@ flowchart TD
 
 ## 各部分的归属
 
-| 部分                 | 归属与约定                                                                                                                  |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| 启动与路由           | `app/main.ts` 和 `app/router.ts`。入口安装 Pinia、路由、国际化和样式。                                                      |
-| 布局与导航           | `app/App.vue`、`app/components/AppHeader.vue`。项目列表属于 `features/projects`，首页不装配侧栏。                           |
-| 首页、新建、编辑入口 | `features/projects`。类型卡片、示例、创建选项和编辑器由注册表派生。                                                         |
-| 设置                 | `features/settings` 是界面，`application/settings.ts` 是状态，`core/settings.ts` 是模型，存储适配单独存在。                 |
-| 项目状态             | `application/projects.ts` 接收已创建的 `Artwork`，不读取设置、不决定具体类型的默认配置。                                    |
-| 项目模型             | `core/project.ts` 包含元数据、对应作品配置和搜索规则。`core/models` 保存配置，`core/artwork.ts` 保留类型与配置的对应关系。  |
-| 存储与迁移           | `infrastructure/storage` 接收标准 `Storage` 参数，可以独立测试或替换适配。迁移固定处理历史结构，不侵入当前模型。            |
-| 编辑会话             | `application/useProjectEditor.ts` 管理快照、保存、缩略图和下载状态；功能界面编辑自己的配置。                                |
-| 预览与播放           | 应用层 `ArtworkPreview.vue` 将作品转为通用 `PreviewSource`；共享 `CanvasPreview.vue` 仅管理异步准备、画布、播放时钟和释放。 |
-| 文字、横幅、贴纸     | 各自目录包含 `Editor.vue`、`module.ts`、`renderer.ts`、`messages.ts`；额外表单、预设和效果也留在自身目录。                  |
-| 字体                 | `shared/typography` 管理列表、加载、倾斜和控件。字体 CSS 在启动时装配，许可证保留在 `public/fonts`。                        |
-| 光辉与过渡           | 通用透明图层光辉在 `shared/canvas/gleam.ts`；文字过渡策略在文字模块内部注册，选项使用同一组策略 ID。                        |
-| 导出流程             | `application/exportProject.ts` 组合渲染器、切片布局和编码器，不判断具体作品类型。                                           |
-| 导出格式             | `application/formats.ts` 注册扩展名、文案、动画标记、大小限制和编码函数；浏览器编码在 `infrastructure/export`。             |
-| 横幅切片             | 横幅模块提供 `exportLayout`，负责画布和连续裁切；导出流程统一编号、添加预览图、打包 ZIP。                                   |
-| 国际化               | 公共文案在 `app/i18n/locales`；功能文案在模块目录；格式文案在格式注册表。启动时自动装配。                                   |
-| 样式                 | 全局样式在 `app/styles`；组件样式保留 `scoped`，没有跨功能组件的样式依赖。                                                  |
-| 静态资源             | 继续使用现有透明贴纸、字体包和许可证。移动源码不复制资源、不改变资源地址。                                                  |
-| 构建与部署           | 根目录保留 Vite、TypeScript、pnpm、Wrangler 和 HTML 入口；构建写入 `dist`，部署为静态 SPA。                                 |
-| 测试与文档           | `tests/unit` 检查行为，`tests/architecture` 检查边界，`tests/helpers` 复用模拟工具；验证记录在 `docs/design-qa.md`。        |
+| 部分                 | 归属与约定                                                                                                                      |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| 启动与路由           | `app/main.ts` 和 `app/router.ts`。入口安装 Pinia、路由、国际化和样式。                                                          |
+| 布局与导航           | `app/App.vue`、`app/components/AppHeader.vue`。项目列表属于 `features/projects`，首页不装配侧栏。                               |
+| 首页、新建、编辑入口 | `features/projects`。类型卡片、示例、创建选项和编辑器由注册表派生。                                                             |
+| 设置                 | `features/settings` 是界面，`application/settings.ts` 是状态，`core/settings.ts` 是模型，存储适配单独存在。                     |
+| 项目状态             | `application/projects.ts` 接收已创建的 `Artwork`，不读取设置、不决定具体类型的默认配置。                                        |
+| 项目模型             | `core/project.ts` 包含元数据、对应作品配置和搜索规则。`core/models` 保存配置，`core/artwork.ts` 保留类型与配置的对应关系。      |
+| 存储与迁移           | `infrastructure/storage` 接收标准 `Storage` 参数，可以独立测试或替换适配。迁移固定处理历史结构，不侵入当前模型。                |
+| 编辑会话             | `application/useProjectEditor.ts` 管理快照、保存、缩略图和下载状态；功能界面编辑自己的配置。                                    |
+| 预览与播放           | 应用层 `ArtworkPreview.vue` 将作品转为通用 `PreviewSource`；共享 `CanvasPreview.vue` 仅管理异步准备、画布、播放时钟和释放。     |
+| 文字、横幅、贴纸     | 各自目录包含 `Editor.vue`、`module.ts`、`renderer.ts`、`messages.ts`；额外表单、预设和效果也留在自身目录。                      |
+| 字体                 | `shared/typography` 管理列表、加载、倾斜和控件。字体 CSS 在启动时装配，许可证保留在 `public/fonts`。                            |
+| 光辉与过渡           | 通用透明图层光辉在 `shared/canvas/gleam.ts`；文字过渡策略在文字模块内部注册，选项使用同一组策略 ID。                            |
+| 导出流程             | `application/exportProject.ts` 组合渲染器、切片布局和编码器，不判断具体作品类型。                                               |
+| 导出格式             | `application/formats.ts` 注册扩展名、文案、动画标记、大小限制和编码函数；浏览器编码在 `infrastructure/export`。                 |
+| 横幅切片             | 横幅模块提供 `exportLayout`，负责画布和连续裁切；导出流程统一编号、添加预览图、打包 ZIP。                                       |
+| 国际化               | 公共文案在 `app/i18n/locales`；功能文案在模块目录；格式文案在格式注册表。启动时自动装配。                                       |
+| 样式                 | 全局样式在 `app/styles`；组件样式保留 `scoped`，没有跨功能组件的样式依赖。                                                      |
+| 静态资源             | 继续使用现有透明贴纸、字体包和许可证。移动源码不复制资源、不改变资源地址。                                                      |
+| 构建与部署           | 根目录保留 Vite、TypeScript、pnpm、Wrangler 和 HTML 入口；Wrangler 的 `[build]` 执行 `pnpm build`，再将 `dist` 部署为静态 SPA。 |
+| 测试与文档           | `tests/unit` 检查行为，`tests/architecture` 检查边界，`tests/helpers` 复用模拟工具；验证记录在 `docs/design-qa.md`。            |
 
 ## 新增作品类型
 
