@@ -1,11 +1,10 @@
 name = "sticker-tgda-sh"
 compatibility_date = "2026-09-01"
 
-# NOTE: Set up the custom domain sticker.tgda.sh in the Cloudflare dashboard.
+[[routes]]
+pattern = "sticker.tgda.sh"
+custom_domain = true
 
 [assets]
 directory = "./dist"
 not_found_handling = "single-page-application"
-
-[vars]
-ENVIRONMENT = "production"

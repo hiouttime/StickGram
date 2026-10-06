@@ -1,0 +1,36 @@
+export default {
+  'zh-CN': {
+    name: '贴纸',
+    title: '贴纸',
+    description: '用一张表情包或自己的图片，制作大尺寸贴纸',
+    spec: '512 × 512 · 聊天贴纸',
+    editor: {
+      design: '贴纸设计',
+      image: '贴纸图片',
+      upload: '替换图片',
+      uploadHint: '支持 PNG、JPEG、WebP；透明 PNG 可保留透明背景。',
+      scale: '图片大小',
+      motion: '动态效果',
+      bounce: '轻轻摇摆',
+      pulse: '呼吸缩放',
+      none: '保持原样',
+    },
+  },
+  en: {
+    name: 'Sticker',
+    title: 'Sticker',
+    description: 'Turn a reaction image or your own artwork into a chat sticker',
+    spec: '512 × 512 · Chat stickers',
+    editor: {
+      design: 'Sticker design',
+      image: 'Sticker image',
+      upload: 'Replace image',
+      uploadHint: 'PNG, JPEG, or WebP. Transparent PNG preserves its background transparency.',
+      scale: 'Image size',
+      motion: 'Animation',
+      bounce: 'Gentle sway',
+      pulse: 'Breathing scale',
+      none: 'Keep still',
+    },
+  },
+}
