@@ -4,6 +4,8 @@
 
 ## 开发
 
+使用 pnpm 10.11.1，版本声明在 `package.json` 的 `packageManager`。`pnpm-workspace.yaml` 明确包含根项目，并使用此版本支持的依赖构建许可配置。
+
 ```sh
 pnpm install
 pnpm dev

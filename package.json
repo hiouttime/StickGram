@@ -2,6 +2,7 @@
   "name": "sticker.tgda.sh",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.11.1",
   "scripts": {
     "dev": "vite",
     "build": "pnpm type-check && vite build",
